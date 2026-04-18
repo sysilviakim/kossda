@@ -15,7 +15,8 @@ particle_suffixes <- c(
   "우리", "여러분", "것입니다", "것입니", "대해서",
   "특히", "통해서", "중에", "에라도", "이런", "합니다", "말씀드립니다마",
   "등등", "간에", "어떻게", "그렇다면", "것만이라도", "그러한",
-  "칩니다", "주십시오", "빕니다", "이였으나"
+  "칩니다", "주십시오", "빕니다", "이였으나", 
+  "가지고", "있어서", "이것", "에", "하에"
 )
 
 extract_metadata <- function(path) {
@@ -105,16 +106,24 @@ search_assembly <- searchK(
 )
 
 View(search_assembly$results)
-final_assembly <- searchK(
+## High K vs. low K
+## Exclusivity 
+## Semantic Coherence 
+## Heldout likelihood
+
+## Final model fitting
+final_assembly <- stm(
   documents = stm_assembly$documents,
   vocab = stm_assembly$vocab,
-  K = 5,
+  K = 6,
   prevalence = ~ post_april19,
   data = stm_assembly$meta,
   init.type = "Spectral",
   seed = 1234
 )
 
-
+# Top words ====================================================================
+out <- labelTopics(final_assembly, n = 10)
+out
 
 
